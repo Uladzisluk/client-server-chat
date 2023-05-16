@@ -34,13 +34,15 @@ public class ClientHandler implements Runnable{
         main: try{
             out.write("Podaj swoją imię".getBytes());
             out.flush();
-            byte[] byteMes = in.readAllBytes();
+            byte[] byteMes = new byte[80];
+            in.read(byteMes);
             String nameFromBytes = new String(byteMes);
             if (nameFromBytes.equals("KONIEC")) break main;
             name = nameFromBytes;
             out.write("Teraz możesz pisać to czatu".getBytes());
             while(!message.equals("KONIEC")){
-                byte[] byteMessage = in.readAllBytes();
+                byte[] byteMessage = new byte[80];
+                in.read(byteMessage);
                 log.info("Klient wysłał wiadomość");
                 message = new String(byteMessage);
                 if(message.equals("KONIEC")) continue;
